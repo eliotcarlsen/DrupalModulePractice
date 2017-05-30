@@ -1,0 +1,17 @@
+<?php
+function newuser_menu(){
+  $items = array();
+  $items['newuser'] = array(
+    'title' => 'Welcome to the website!',
+    'page callback' => 'welcome',
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+function welcome(){
+  return '<p>Hello, and welcome to the website!</p>';
+}
+function newuser_user_insert(){
+  $_GET['destination'] = 'newuser';
+}

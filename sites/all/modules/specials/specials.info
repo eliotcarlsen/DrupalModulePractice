@@ -1,0 +1,5 @@
+name = Specials
+description = List out a restaorant's daily specials.
+package = Rob Modules
+core = 7.x
+files[] = specials.module

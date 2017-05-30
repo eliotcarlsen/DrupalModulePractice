@@ -1,0 +1,30 @@
+<?php
+function favorites_menu() {
+  $favorites = array(
+    'movies' =>
+      array('Goodfellas', 'The Godfather', 'Star Wars'),
+   'books' =>
+      array('Book one', 'Book two', 'Book three'),
+   'songs' =>
+      array('Jump', 'Booya!', 'Goin Back to Cali'),
+);
+  foreach ($favorites as $favorite => $value){
+    $items['favorite/' . $favorite] = array(
+        'title' => 'My Favorite ' . $favorite,
+        'page callback' => 'favorites_page',
+        'page arguments' => array($favorite, $value),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+  }
+  return $items;
+}
+
+function favorites_page($favorite, $value){
+  $output='<p>My favorite ' . $favorite . ' are: ';
+
+  foreach ($value as $item) {
+    $output .= ('<li>' . $item . '</li>');
+  }
+  return $output;
+}

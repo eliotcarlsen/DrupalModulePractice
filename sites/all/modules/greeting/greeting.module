@@ -1,0 +1,75 @@
+<?php
+function greeting_menu() {
+  $items = array();
+  $items['hello_friend'] = array(
+      'title' => 'Hello Friend!',
+      'page callback' => 'say_hello',
+      'access callback' => TRUE,
+      'type' => MENU_NORMAL_ITEM,
+  );
+  $items['farewell'] = array(
+    'title' => 'Farewell Friend!',
+    'page callback' => 'say_farewell',
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $friends = array('Rob', 'Xing', 'Max', 'Minh');
+  foreach ($friends as $friend){
+    $items['cards/' . $friend] = array(
+      'title' => $friend,
+      'page callback' => 'friends_page',
+      'page arguments' => array($friend),
+      'access callback' => TRUE,
+      'type' => MENU_NORMAL_ITEM,
+    );
+  }
+
+  $items['groceries'] = array(
+    'title' => 'Groceries',
+    'page callback' => 'groceries_list',
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+function say_hello() {
+  return '<p>Hello friend!</p>';
+}
+
+function say_farewell() {
+  return '<p>See ya!</p>';
+}
+
+function greeting_user_login() {
+  $_GET['destination'] = 'hello_friend';
+}
+
+function greeting_user_logout() {
+  $_GET['destination'] = 'farewell';
+}
+
+function friends_page($friend) {
+  return '<p>Hello friend...' . $friend . '</p>';
+
+}
+
+function groceries_list() {
+  $groceries = array();
+  $groceries['Eggs'] = array(
+    'price' => 1.99,
+    'quantity' => '12 eggs',
+  );
+  $groceries['Milk'] = array(
+    'price' => 2.35,
+    'quantity' => '1 quart',
+  );
+
+$output=null;
+  foreach ($groceries as $key => $value) {
+     $output .= ('<h2>' . $key . ':</h2>' . '<p><strong>Price:</strong>' . $value['price'] . '</p><p><strong>Quantity: </strong>' . $value['quantity'] . '</p>');
+     continue;
+    }
+    return $output;
+}

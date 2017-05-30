@@ -1,0 +1,5 @@
+name = New User
+description = New User Display
+package = Rob Modules
+core = 7.x
+files[] = newuser.module

@@ -1,0 +1,42 @@
+<?php
+function comment_buddy_menu(){
+  $items = array();
+  $items['comment_submitted'] = array(
+    'title' => 'Thank you for your comment!',
+    'page callback' => 'thank_you',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  $items['edit_comment'] = array(
+    'title' => 'Thank you for editing your comment!',
+    'page callback' => 'edit',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  $items['delete_comment'] = array(
+    'title' => 'Thank you for eating your words!',
+    'page callback' => 'delete',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+function thank_you(){
+  drupal_set_message("Hi there!");
+  return '<p>thank you for your comment</p>';
+}
+function edit(){
+  return '<p>thank you for your edits</p>';
+}
+function delete(){
+  return '<p>thank you for eating your words</p>';
+}
+function comment_buddy_comment_insert(){
+  $_GET['destination'] = 'comment_submitted';
+}
+function comment_buddy_comment_update(){
+  $_GET['destination'] = 'edit_comment';
+}
+function comment_buddy_comment_delete(){
+  $_GET['destination'] = 'delete_comment';
+}

@@ -1,0 +1,21 @@
+<?php
+function pet_menu() {
+  $items = array();
+  $items['pet'] = array(
+    'title' => 'Grumpy Cat',
+    'page callback' => 'cat_display',
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+function cat_display() {
+  $file = 'sites/all/modules/pet/';
+  return '
+    <h3>My favorite cat: Sam</h3>
+    <img src="' . $file . 'grumpycat.jpeg">
+    <br>
+    <a href="https://www.grumpycats.com/">See more pics of Sam!</a>
+    ';
+}

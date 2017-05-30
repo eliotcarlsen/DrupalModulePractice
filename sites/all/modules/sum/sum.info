@@ -1,0 +1,5 @@
+name = Sum
+description = Provide the sum of two numbers.
+package = Rob Modules
+core = 7.x
+files[] = sum.module

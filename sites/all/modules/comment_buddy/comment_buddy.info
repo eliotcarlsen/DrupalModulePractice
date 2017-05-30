@@ -1,0 +1,5 @@
+name = Comment Buddy
+description = Comment Buddy
+package = Rob Modules
+core = 7.x
+files[] = comment_buddy.module

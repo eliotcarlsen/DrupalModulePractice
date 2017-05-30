@@ -1,0 +1,19 @@
+<?php
+function friends_menu() {
+  $friends = array('Rob', 'Xing', 'Max', 'Minh');
+  foreach ($friends as $friend){
+    $items['cards/' . $friend] = array(
+      'title' => $friend,
+      'page callback' => 'friends_page',
+      'page arguments' => array($friend),
+      'access callback' => TRUE,
+      'type' => MENU_NORMAL_ITEM,
+    );
+  }
+  return $items;
+}
+
+function friends_page($friend) {
+  return '<p>Hello friend...' . $friend . '</p>';
+
+}
