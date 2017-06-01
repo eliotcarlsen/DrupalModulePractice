@@ -1,0 +1,59 @@
+<?php
+function rockpaper_menu(){
+    $items['rockpaper'] = array(
+        'title' => 'Rock Paper',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => 'rockpaper_form',
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['paperscissors'] = array(
+        'title' => 'Paper Scissors',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => 'paperscissors_form',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+    $items['winner'] = array(
+      'title' => 'Winner',
+      'page callback' => 'winner',
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+function rockpaper_form(){
+    $form['rockpaper'] = array(
+        '#title' => 'Player1',
+        '#description' => 'Player 1, write in your choice.',
+        '#type' => 'textfield',
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Go',
+    );
+    return $form;
+}
+function rockpaper_form_submit($form, &$form_state){
+    $_SESSION['Player1'] = $form_state['values']['rockpaper'];
+    $form_state['redirect'] = 'paperscissors';
+}
+function paperscissors_form(){
+    $form['paperscissors'] = array(
+        '#title' => 'Player2',
+        '#description' => 'Player2, write in your choice.',
+        '#type' => 'textfield',
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Go',
+    );
+    return $form;
+}
+function paperscissors_form_submit($form, &$form_state){
+    $_SESSION['Player2'] = $form_state['values']['paperscissors'];
+    $form_state['redirect'] = 'winner';
+}
+function winner(){
+    return 'youre a winner';
+}

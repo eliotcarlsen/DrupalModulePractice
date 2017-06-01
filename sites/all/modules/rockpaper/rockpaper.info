@@ -1,0 +1,5 @@
+name = RockPaper
+description = Rock Paper Scissors game
+package = Rob Modules
+core = 7.x
+files[] = rockpaper.module
