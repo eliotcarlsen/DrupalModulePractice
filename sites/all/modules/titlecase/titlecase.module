@@ -1,0 +1,40 @@
+<?php
+function titlecase_menu(){
+    $items['titlecase'] = array(
+        'title' => 'Title Case',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('titlecase_form'),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['titlecase_success_page'] = array(
+        'title' => 'Success',
+        'page callback' => 'titlecase_success',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+function titlecase_form(){
+    $form['string'] = array(
+        '#title' => 'string',
+        '#type' => 'textfield',
+        '#description' => t('Enter any word you want.'),
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Title Case',
+    );
+    return $form;
+}
+
+function titlecase_form_submit($form, &$form_state){
+    $word = $form_state['values']['string'];
+    $uppercaseword = ucwords($word);
+    $_SESSION['titlecase_output'] = $uppercaseword;
+    $form_state['redirect'] = 'titlecase_success_page';
+}
+function titlecase_success(){
+    $answer = $_SESSION['titlecase_output'];
+    return "Here's your titled word... " . $answer;
+}

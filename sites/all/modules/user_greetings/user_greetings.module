@@ -1,0 +1,72 @@
+<?php
+function user_greetings_menu(){
+    $items = array();
+    $items['welcome_back'] = array(
+        'title' => 'Nice to see you!',
+        'page callback' => 'auth_hello',
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['adios'] = array(
+      'title' => 'See you next time.',
+      'page callback' => 'auth_goodbye',
+      'access callback' => TRUE,
+      'type' => MENU_NORMAL_ITEM,
+    );
+    $items['yo'] = array(
+        'title' => 'Nice to see you!',
+        'page callback' => 'authenticated_hello',
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['seeya'] = array(
+      'title' => 'See you next time.',
+      'page callback' => 'authenticated_goodbye',
+      'access callback' => TRUE,
+      'type' => MENU_NORMAL_ITEM,
+    );
+    return $items;
+}
+
+function auth_hello() {
+  return '<p>Welcome back administrator user!</p>';
+}
+
+function auth_goodbye() {
+  return '<p>See ya next time administrator user!</p>';
+}
+function authenticated_hello() {
+  return '<h1>authenticated user!</h1>';
+}
+
+function authenticated_goodbye() {
+  return '<h1>authenticated user!</h1>';
+}
+
+function user_greetings_user_login(&$edit, $account) {
+    foreach($account as $key => $value){
+        if($key === 'roles'){
+            foreach($value as $user){
+                if ($user === 'administrator'){
+                    $_GET['destination'] = 'welcome_back';
+                } elseif ($user === 'authenticated user'){
+                    $_GET['destination'] = 'yo';
+                }
+            }
+        }
+    }
+}
+
+function user_greetings_user_logout($account) {
+    foreach($account as $key => $value){
+        if($key === 'roles'){
+            foreach($value as $user){
+                if ($user === 'administrator'){
+                    $_GET['destination'] = 'adios';
+                } elseif ($user === 'authenticated user'){
+                    $_GET['destination'] = 'seeya';
+                }
+            }
+        }
+    }
+}

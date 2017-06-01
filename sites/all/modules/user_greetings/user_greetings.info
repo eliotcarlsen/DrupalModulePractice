@@ -1,0 +1,5 @@
+name = GreetingTime
+description = Display User Greetings
+package = Rob Modules
+core = 7.x
+files[] = user_greetings.module

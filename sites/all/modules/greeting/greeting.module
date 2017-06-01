@@ -42,13 +42,13 @@ function say_farewell() {
   return '<p>See ya!</p>';
 }
 
-function greeting_user_login() {
-  $_GET['destination'] = 'hello_friend';
-}
-
-function greeting_user_logout() {
-  $_GET['destination'] = 'farewell';
-}
+// function greeting_user_login() {
+//   $_GET['destination'] = 'hello_friend';
+// }
+//
+// function greeting_user_logout() {
+//   $_GET['destination'] = 'farewell';
+// }
 
 function friends_page($friend) {
   return '<p>Hello friend...' . $friend . '</p>';

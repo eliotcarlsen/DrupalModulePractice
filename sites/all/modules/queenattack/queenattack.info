@@ -1,0 +1,5 @@
+name = Queen Attack
+description = See if the queen can attack the piece.
+package = Rob Modules
+core = 7.x
+files[] = queenattack.module
