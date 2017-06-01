@@ -19,12 +19,16 @@ function queen_check_form(){
     $form['queen_coordinates'] = array(
         '#title' => 'Queen Coordinates',
         '#type' => 'textfield',
+        '#maxlength' => 2,
         '#description' => t('Enter the placement of the queen.'),
+        '#element_validate' => array('element_validate_positions'),
     );
     $form['piece_coordinates'] = array(
         '#title' => 'Piece Coordinates',
         '#type' => 'textfield',
+        '#maxlength' => 2,
         '#description' => t('Enter the placement of the piece that is being attacked.'),
+        '#element_validate' => array('element_validate_positions'),
     );
     $form['submit'] = array(
         '#type' => 'submit',
@@ -32,13 +36,30 @@ function queen_check_form(){
     );
     return $form;
 }
+function queen_check_form_validate($form, &$form_state){
+  if($form_state['values']['queen_coordinates'] === $form_state['values']['piece_coordinates']) {
+    form_set_error('queen_coordinates', 'The chess pieces must be on different squares to start.');
+  }
+}
+function element_validate_positions($element){
+    $result = preg_match("/[a-h]/i",$element['#value'][0], $matches);
+    $result2 = preg_match('/[1-8]/i',$element['#value'][1], $matches);
+    if ($result === 0){
+      form_error($element, t('Please enter a character from a to h in the first position.'));
+    }
+    elseif($result2 === 0){
+      form_error($element, t('Please enter a number from 1 to 8 in the second position.'));
+    }
+}
 function queen_check_form_submit($form, &$form_state){
     $queen = $form_state['values']['queen_coordinates'];
     $piece = $form_state['values']['piece_coordinates'];
-    if (substr_compare($queen, $piece, 0) == 0){
+    $split_queen = str_split($queen);
+    $split_piece = str_split($piece);
+    if ($split_queen[0] === $split_piece[0] || $split_queen[1] === $split_piece[1] || abs(strcmp($split_queen[0],$split_piece[0])) == abs(intval($split_queen[1]) - intval($split_piece[1])) ){
         $_SESSION['queen'] = "The queen will kill.";
         $form_state['redirect'] = 'queenattack_success_page';
-    } elseif (substr_compare($queen, $piece, 0) != 0){
+    } else {
         $_SESSION['queen'] = 'The piece gets away!';
         $form_state['redirect'] = 'queenattack_success_page';
     }

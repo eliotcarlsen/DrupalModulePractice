@@ -1,0 +1,5 @@
+name = State Poll
+description = state poll
+package = Rob Modules
+core = 7.x
+files[] = statepoll.module

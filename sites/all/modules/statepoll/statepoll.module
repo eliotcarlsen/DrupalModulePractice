@@ -1,0 +1,62 @@
+<?php
+function statepoll_menu(){
+  $items = array();
+  $items['statepoll'] = array(
+      'title' => 'State Poll',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('state_poll_form'),
+      'access callback' => TRUE,
+      'type' => MENU_NORMAL_ITEM,
+  );
+  $items['statepoll_success_page'] = array(
+      'title' => 'Success',
+      'page callback' => 'success',
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+function state_poll_form(){
+  $form['ice_cream'] = array(
+      '#title' => 'Ice Cream',
+      '#description' => 'Enter your favorite ice cream.',
+      '#type' => 'textfield',
+  );
+  $form['state'] = array(
+      '#title' => 'State',
+      '#description' => 'Enter the state you live in.',
+      '#type' => 'textfield',
+      '#element_validate' => array('element_validate_state','element_validate_letter'),
+  );
+  $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => 'Go',
+  );
+  return $form;
+}
+function state_poll_form_submit($form, &$form_state){
+    $_SESSION['icecream'] = $form_state['values']['ice_cream'];
+    $_SESSION['state'] = $form_state['values']['state'];
+    $form_state['redirect'] = 'statepoll_success_page';
+}
+function element_validate_letter($element){
+    if (preg_match('/[0-9]/i', $element['#value'], $matches) != 0){
+        form_error($element, t('You can only enter state names in the State Field.'));
+    }
+}
+function element_validate_state($element){
+    if (strlen($element['#value']) < 2){
+      form_error($element, t('State name must be full name or two character abbreviation.'));
+    } elseif (strlen($element['#value']) === 2){
+        if (!(ctype_lower($element['#value']) || ctype_upper($element['#value'])))
+        form_error($element, t('State name must be all upper case or all lowercase.'));
+    } else {
+        if (!(ctype_lower($element['#value']) || $element['#value'] == ucwords(strtolower($element['#value'])))){
+          form_error($element, t('State name must be in all lower case or Title Case format.'));
+        }
+    }
+}
+function success(){
+  return '<p>Your favorite ice cream is ' . $_SESSION['icecream'] . ' and you live in ' . $_SESSION['state'] . '.</p>';
+}
